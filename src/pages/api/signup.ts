@@ -1,6 +1,6 @@
 import db from "~/server/db";
 import bcrypt from 'bcryptjs';
-
+import jwt from 'jsonwebtoken'
 import { NextApiRequest,NextApiResponse } from "next";
 
 
@@ -26,8 +26,8 @@ export default async function handler (req:UserInfo,res:NextApiResponse){
                 }
             })
             console.log(user);
-
-            return res.status(201).json({message:'user created Successfully'})
+            const jwtToken = jwt.sign({name:name,email:email},'Himanshu',{algorithm:'RS256',expiresIn:'2h'})
+            return res.status(201).json({message:'user created Successfully',token:jwtToken})
         }
         catch(err){
             return res.status(400).json({message:'Error occured while creating user','Error':err})
