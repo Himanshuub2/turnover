@@ -25,7 +25,6 @@ export default async function handler (req:UserInfo,res:NextApiResponse){
                     password:hashedPass
                 }
             })
-            console.log(user);
             const jwtToken = jwt.sign({name:name,email:email},'Himanshu',{algorithm:'RS256',expiresIn:'2h'})
             return res.status(201).json({message:'user created Successfully',token:jwtToken})
         }
